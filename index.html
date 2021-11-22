@@ -1,81 +1,105 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>hisrotiy official</title>
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="description" content="hisrotiy is a collection of art projects including video, music, 3D modeling and more, named after its author" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+  <title>hisrotiy official</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description"
+    content="hisrotiy is a collection of art projects including video, music, 3D modeling and more, named after its author" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial;
-  font-size: 17px;
-}
+    body {
+      margin: 0;
+      font-family: Arial;
+      font-size: 17px;
+    }
 
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-}
+    #myVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
 
-.content {
-  position: fixed;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  color: #f1f1f1;
-  width: 100%;
-  padding: 20px;
-}
+    .content {
+      position: fixed;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: #f1f1f1;
+      width: 100%;
+      padding: 20px;
+    }
 
-#hisrotiyBtn {
-  width: 200px;
-  font-size: 18px;
-  padding: 10px;
-  border: none;
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-}
+    #hisrotiyBtn {
+      width: 200px;
+      font-size: 18px;
+      padding: 10px;
+      border: none;
+      background: #000;
+      color: #fff;
+      cursor: pointer;
+    }
 
-#hisrotiyBtn:hover {
-  background: #ddd;
-  color: black;
-}
-</style>
+    #hisrotiyBtn:hover {
+      background: #ddd;
+      color: black;
+    }
+  </style>
 </head>
+
 <body>
 
-<video autoplay muted loop id="myVideo">
-  <source src="https://hisrotiy.cdn.bcebos.com/out.mp4" type="video/mp4">
-  Your browser does not support HTML5 video.
-</video>
 
-<div class="content">
-  <h1>hisrotiy.</h1>
-  <p>"Hisrotiy" is a collection of art projects including video, music, 3D modeling and more, named after its author. It is in continuous growth. This project is on the same level as "Srotiy.com". (It may include resources from Internet, to remove them, contact "hi@srotiy.com")</p>
-  <button id="hisrotiyBtn" onclick="hisrotiyFunction()">Audio Off</button>
-</div>
+  <video autoplay muted loop id="myVideo">
+    Your browser does not support HTML5 video.
+  </video>
 
-<script>
-var video = document.getElementById("myVideo");
-var btn = document.getElementById("hisrotiyBtn");
+  <div class="content">
+    <h1>hisrotiy.</h1>
+    <p>"Hisrotiy" is a collection of art projects including video, music, 3D modeling and more, named after its author.
+      It is in continuous growth. This project is on the same level as "Srotiy.com". (It may include resources from
+      Internet, to remove them, contact "hi@srotiy.com")</p>
+    <button id="hisrotiyBtn" onclick="hisrotiyFunction()">Audio Off</button>
+  </div>
 
-function hisrotiyFunction() {
-  if (video.muted) {
-    video.muted = false;
-    btn.innerHTML = "Audio On";
-  } else {
-    video.muted = true;
-    btn.innerHTML = "Audio Off";
-  }
-}
-</script>
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d23e461cf8a44f898e17171a714f18c9"}'></script><!-- End Cloudflare Web Analytics -->
+  <script>
+    var video = document.getElementById("myVideo");
+    var btn = document.getElementById("hisrotiyBtn");
+
+    function hisrotiyFunction() {
+      if (video.muted) {
+        video.muted = false;
+        btn.innerHTML = "Audio On";
+      } else {
+        video.muted = true;
+        btn.innerHTML = "Audio Off";
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js"></script>
+  <script>
+
+    var client = new WebTorrent();
+    // Sintel, a free, Creative Commons movie
+    var torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+
+    client.add(torrentId, function (torrent) {
+      // Torrents can contain many files. Let's use the .mp4 file
+      var file = torrent.files.find(function (file) {
+        return file.name.endsWith('.mp4')
+      })
+      file.renderTo('video#myVideo', { autoplay: true, controls: false, muted: true })
+      //file.appendTo('#vv',{ autoplay: true, controls: false, muted: true})
+    })
+  </script>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "d23e461cf8a44f898e17171a714f18c9"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
+
 </html>
